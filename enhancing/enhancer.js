@@ -5,18 +5,27 @@ module.exports = {
   get,
 };
 
-function succeed(item) {
-  return { ...item };
+function repair(item) {
+  return { ...item, durability: 100 };
 }
 
 function fail(item) {
-  return { ...item };
+  const enhancement =
+    item.enhancement >= 16 ? item.enhancement - 1 : item.enhancement;
+  const durability =
+    item.enhancement >= 15 ? item.durability - 10 : item.durability - 5;
+  return { ...item, enhancement, durability };
 }
-
-function repair(item) {
-  return { ...item };
+function succeed(item) {
+  const enhancement =
+    item.enhancement === 20 ? (item.enhancement = 20) : ++item.enhancement;
+  return { ...item, enhancement };
 }
 
 function get(item) {
-  return { ...item };
+  const enhancement =
+    item.enhancement === 0
+      ? (item.name = item.name)
+      : (item.name = `[+${item.enhancement}] ${item.name}`);
+  return { ...item, enhancement };
 }
