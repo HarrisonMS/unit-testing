@@ -1,4 +1,4 @@
-const item = {
+const itemZero = {
   name: "sword",
   durability: 0,
   enhancement: 0,
@@ -19,4 +19,10 @@ const sixteenEnhanceditem = {
   durability: 50,
   enhancement: 16,
 };
-(module.exports = sixteenEnhanceditem), fourteenEnhanceditem, maxItem, item;
+
+module.exports = {
+  sixteenEnhanceditem,
+  fourteenEnhanceditem,
+  maxItem,
+  itemZero,
+};

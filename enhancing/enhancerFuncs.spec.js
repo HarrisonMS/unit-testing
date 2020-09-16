@@ -1,7 +1,13 @@
 const { repair, succeed, fail, get } = require("./enhancer");
+const {
+  sixteenEnhanceditem,
+  fourteenEnhanceditem,
+  maxItem,
+  itemZero,
+} = require("./testCases");
 
 describe("repair() method", () => {
-  const item = { durability: 0 };
+  const item = itemZero.durability;
   const expected = { durability: 100 };
   const test = repair(item);
   it("returns a new item", () => {
@@ -14,33 +20,29 @@ describe("repair() method", () => {
 
 describe("succeed() method", () => {
   it("increases item.enhancement by value of 1", () => {
-    const item = { enhancement: 2 };
-    const expected = { enhancement: 3 };
+    const item = fourteenEnhanceditem;
+    const expected = { name: "sword", durability: 50, enhancement: 15 };
     const test1 = succeed(item);
     expect(test1).toEqual(expected);
   });
   it("if enhancement is lvl 20 do not change lvl", () => {
-    const item = { enhancement: 18 };
-    const expected = { enhancement: 19 };
-    const test1 = succeed(item);
-    expect(test1).toEqual(expected);
-    const item2 = { enhancement: 20 };
-    const expected2 = { enhancement: 20 };
-    const test2 = succeed(item2);
-    expect(test2).toEqual(expected2);
+    const item = maxItem;
+    const expected = maxItem;
+    const test = succeed(item);
+    expect(test).toEqual(expected);
   });
   it("does not change item.durability", () => {
-    const item = { enhancement: 0, durability: 100 };
-    const expected = { enhancement: 1, durability: 100 };
-    const test1 = succeed(item);
-    expect(test1).toEqual(expected);
+    const item = maxItem;
+    const expected = maxItem;
+    const test = succeed(item);
+    expect(test).toEqual(expected);
   });
 });
 
 describe("fail() method", () => {
   it(" if item.enhancement is less than 15 durabiltity decreased by 5", () => {
-    const item1 = { enhancement: 10, durability: 5 };
-    const expected1 = { enhancement: 10, durability: 0 };
+    const item1 = { enhancement: 14, durability: 5 };
+    const expected1 = { enhancement: 14, durability: 0 };
     const test1 = fail(item1);
     expect(test1).toEqual(expected1);
     const item2 = { enhancement: 14, durability: 10 };
@@ -75,5 +77,14 @@ describe("get() method", () => {
     };
     get(item);
     expect(item.name).toBe("[+5] daggers");
+  });
+  it("expect zero enhancement item name not to change", () => {
+    const item = {
+      name: "daggers",
+      durability: 0,
+      enhancement: 0,
+    };
+    get(item);
+    expect(item.name).toBe("daggers");
   });
 });
